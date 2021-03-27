@@ -1,0 +1,23 @@
+### Log Files ###
+*.log
+
+### Docker Env Files ###
+.env
+
+### Vault Config ###
+docker/vault/file/*
+
+### Exclude iDRAC downloads ###
+**/docker/idrac/app/
+
+### Exclude Large Binaries
+*.jar
+
+### Swap Files ###
+.*.swp
+
+### Certificates & Keys ###
+*.cer
+*.pem
+*.crt
+*.key

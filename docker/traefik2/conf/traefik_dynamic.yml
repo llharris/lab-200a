@@ -1,0 +1,6 @@
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /conf/fullchain.cer
+        keyFile: /conf/200a.co.uk.key

@@ -1,0 +1,32 @@
+version: '2.1'
+
+services:
+  heimdall:
+    image: linuxserver/heimdall:latest
+    container_name: heimdall
+    hostname: heimdall
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - heimdall-config:/config
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:heimdall.${MY_DOMAIN}"
+      - "traefik.backend=heimdall"
+      - "traefik.port=443"
+      - "traefik.protocol=https"
+      - "traefik.http.routers.heimdall.entrypoints=websecure"
+      - "traefik.http.routers.heimdall.rule=Host(`heimdall.${MY_DOMAIN}`)"
+      - "traefik.http.routers.heimdall.tls=true"
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}
+
+volumes:
+  heimdall-config:

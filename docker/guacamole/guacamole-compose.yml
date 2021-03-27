@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  guacd:
+    image: guacamole/guacd
+    container_name: guacd
+    hostname: guacd
+    restart: unless-stopped
+
+  guacamole:
+    image: guacamole/guacamole:latest
+    container_name: guacamole
+    hostname: guacamole
+    restart: unless-stopped
+    environment:
+      - GUACD_HOSTNAME=${GUACD_HOSTNAME}
+      - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.guacamole.entrypoints=websecure"
+      - "traefik.http.routers.guacamole.rule=Host(`guac.${MY_DOMAIN}`)"
+      - "traefik.http.routers.guacamole.tls=true"
+      - "traefik.http.routers.guacamole.middlewares=guacamole"
+      - "traefik.http.middlewares.guacamole.addprefix.prefix=/guacamole"
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}

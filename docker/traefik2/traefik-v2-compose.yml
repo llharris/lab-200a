@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    hostname: "traefik"
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${DOCKER_BASEDIR}/traefik2/traefik.yml:/traefik.yml:ro"
+      - "${DOCKER_BASEDIR}/traefik2/conf:/conf"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.tls.domains[0].main=${MY_DOMAIN}"
+      - "traefik.http.routers.traefik.tls.domains[0].sans=*.${MY_DOMAIN}"
+      - "traefik.http.routers.traefik_https.rule=Host(`traefik.${MY_DOMAIN}`)"
+      - "traefik.http.routers.traefik_https.entrypoints=websecure"
+      - "traefik.http.routers.traefik_https.tls=true"
+      - "traefik.http.routers.traefik_https.service=api@internal"
+
+networks:
+  default:
+    external:
+      name: traefik_net

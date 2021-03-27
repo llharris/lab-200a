@@ -1,0 +1,15 @@
+$TTL    604800
+@       IN      SOA     ns1.home.200a.co.uk. admin.home.200a.co.uk. (
+                        000001 ; serial
+                        604800 ; refresh
+                        86400  ; retry
+                        2419200 ; expire
+                        604800 ) ; negative cache TTL
+
+; name server records
+@       IN      NS      ns1
+@       IN      NS      ns2
+
+; 192.168.200.0/24 - PTR records
+10      IN      PTR     desktop.home.200a.co.uk
+123     IN      PTR     testing.home.200a.co.uk

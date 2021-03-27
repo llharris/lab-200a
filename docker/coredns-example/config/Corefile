@@ -1,0 +1,17 @@
+.:53 {
+    any
+    log
+    errors
+    #hosts /coredns-config/hosts {
+    #    fallthrough
+#}
+    forward . 1.1.1.1 1.0.0.1
+}
+
+home.200a.co.uk:53 {
+    file /coredns-config/db.home.200a.co.uk
+}
+
+200.168.192.in-addr.arpa:53 {
+    file /coredns-config/db.192.168.200
+}

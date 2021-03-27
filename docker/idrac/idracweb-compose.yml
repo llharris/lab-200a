@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  idracweb:
+    image: domistyle/idrac6:latest
+    container_name: idrac
+    hostname: idrac
+    restart: always
+    volumes:
+      - "${DOCKER_BASEDIR}/idrac/app:/app"
+      - "${DOCKER_BASEDIR}/idrac/vmedia:/vmedia"
+      - "${DOCKER_BASEDIR}/idrac/screenshots:/screenshots"
+    environment:
+      - IDRAC_HOST=${IDRAC_HOST}
+      - IDRAC_USER=${IDRAC_USER}
+      - IDRAC_PASSWORD=${IDRAC_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.idracweb.entrypoints=websecure"
+      - "traefik.http.routers.idracweb.tls=true"
+      - "traefik.http.routers.idracweb.rule=Host(`idracweb.${MY_DOMAIN}`)"
+
+networks:
+  default:
+    external: 
+      name: traefik_net

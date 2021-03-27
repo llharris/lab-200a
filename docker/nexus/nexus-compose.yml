@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  nexus3:
+    image: sonatype/nexus3
+    container_name: nexus
+    hostname: nexus
+    restart: unless-stopped
+    environment:
+      - NEXUS_CONTENT="nexus"
+    volumes:
+      - nexus-data:/nexus-data
+      
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8081"
+      - "traefik.http.routers.nexus.entrypoints=websecure"
+      - "traefik.http.routers.nexus.rule=Host(`nexus.${MY_DOMAIN}`)"
+      - "traefik.http.routers.nexus.tls=true"
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}
+
+volumes:
+  nexus-data:

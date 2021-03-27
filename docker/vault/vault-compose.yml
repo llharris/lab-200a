@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  vault:
+    container_name: vault
+    hostname: vault
+    image: vault:1.7.0
+    restart: always
+    cap_add: 
+      - IPC_LOCK
+    volumes:
+      - ${DOCKER_BASEDIR}/vault/logs:/vault/logs
+      - ${DOCKER_BASEDIR}/vault/file:/vault/file
+      - ${DOCKER_BASEDIR}/vault/config:/vault/config
+    entrypoint: vault server -config=/vault/config/vault.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.entrypoints=websecure"
+      - "traefik.http.routers.vault.rule=Host(`vault.${MY_DOMAIN}`)"
+      - "traefik.http.routers.vault.tls=true"
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}
