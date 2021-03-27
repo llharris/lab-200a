@@ -70,6 +70,7 @@ services:
         gitlab_rails['gitlab_email_from'] = 'gitlab-notifications@${SMTP_DOMAIN}'
         gitlab_rails['gitlab_email_display_name'] = 'Gitlab'
         gitlab_rails['gitlab_email_reply_to'] = 'noreply@${SMTP_DOMAIN}'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
         unicorn['worker_timeout'] = 60
         unicorn['worker_processes'] = 2
         sidekiq['concurrency'] = 15

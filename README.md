@@ -5,6 +5,7 @@ This repo and documentation is for my personal lab environment. These are essent
 ## CONTENTS
 
 * [DNS Configuration](docs/dns.md)
+* [Git Mirror Config](docs/git-mirror.md)
 
 
 ## Overview
