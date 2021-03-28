@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    container_name: jenkins
+    hostname: jenkins
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/usr/bin/docker:/usr/bin/docker"
+      - "jenkins-home:/var/jenkins_home"
+    ports:
+      - 50000:50000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jenkins.rule=Host(`jenkins.${MY_DOMAIN}`)"
+      - "traefik.http.routers.jenkins.entrypoints=websecure"
+      - "traefik.http.routers.jenkins.tls=true"
+
+volumes:
+  jenkins-home:
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}

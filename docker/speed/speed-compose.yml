@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  librespeed:
+    image: openspeedtest/latest:speedtest
+    container_name: speed
+    hostname: speed
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.speed.rule=Host(`speed.${MY_DOMAIN}`)"
+      - "traefik.http.routers.speed.entrypoints=websecure"
+      - "traefik.http.routers.speed.tls=true"
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}
