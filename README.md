@@ -6,6 +6,7 @@ This repo and documentation is for my personal lab environment. These are essent
 
 * [DNS Configuration](docs/dns.md)
 * [Git Mirror Config](docs/git-mirror.md)
+* [Firewall Config](docs/ufw.md)
 
 
 ## Overview

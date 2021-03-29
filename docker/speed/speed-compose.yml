@@ -2,7 +2,7 @@ version: '3'
 
 services:
   librespeed:
-    image: openspeedtest/latest:speedtest
+    image: adolfintel/speedtest:latest
     container_name: speed
     hostname: speed
     restart: unless-stopped
