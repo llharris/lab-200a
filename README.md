@@ -33,6 +33,7 @@ Where possible, all services running on deskmini are run as containers under doc
 * [GitLab EE](https://gitlab.200a.co.uk) - Git SCM. A bit bloaty. Also runs a container registry.
 * [Mattermost](https://mattermost.200a.co.uk) - Comes as part of Git. Collaboration tool.
 * [Guacamole](https://guac.200a.co.uk) - Clientless remote desktop gateway. Access VNC, RDP, SSH via HTML5.
+* [AWX](https://awx.200a.co.uk) - Free version of Red Hat Tower. AWX v18.0.0. Knifed and forked into existence somehow.
 
 ### SERVICES PLANNED OR WORK IN PROGRESS
 
