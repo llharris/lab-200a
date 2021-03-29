@@ -1,0 +1,81 @@
+---
+version: '2'
+services:
+        # Primary AWX Development Container
+  awx_1:
+    user: "1000"
+    image: "gcr.io/ansible-tower-engineering/awx_devel:HEAD"
+    container_name: ansible_awx_1
+    hostname: awx_1
+    command: launch_awx.sh
+    environment:
+      OS: " Operating System: Ubuntu 20.04.2 LTS"
+      SDB_HOST: 0.0.0.0
+      SDB_PORT: 7899
+      AWX_GROUP_QUEUES: tower
+      RECEPTORCTL_SOCKET: /var/run/receptor/receptor.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.awx.rule=Host(`awx.${MY_DOMAIN}`)"
+      - "traefik.http.routers.awx.entrypoints=websecure"
+      - "traefik.http.routers.awx.tls=true"
+      - "traefik.http.routers.awx.service=awx"
+      - "traefik.http.services.awx.loadbalancer.server.port=8013"
+    links:
+      - postgres
+      - redis_1
+    working_dir: "/awx_devel"
+    volumes:
+      - "${DOCKER_BASEDIR}/awx:/awx_devel"
+      - "${DOCKER_BASEDIR}/awx/tools/docker-compose/supervisor.conf:/etc/supervisord.conf"
+      - "${DOCKER_BASEDIR}/awx/tools/docker-compose/_sources/database.py:/etc/tower/conf.d/database.py"
+      - "${DOCKER_BASEDIR}/awx/tools/docker-compose/_sources/websocket_secret.py:/etc/tower/conf.d/websocket_secret.py"
+      - "${DOCKER_BASEDIR}/awx/tools/docker-compose/_sources/local_settings.py:/etc/tower/conf.d/local_settings.py"
+      - "${DOCKER_BASEDIR}/awx/tools/docker-compose/_sources/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "${DOCKER_BASEDIR}/awx/tools/docker-compose/receptor.conf:/etc/receptor/receptor.conf"
+      - "/sys/fs/cgroup:/sys/fs/cgroup"
+      - "~/.kube/config:/var/lib/awx/.kube/config"
+      - "redis_socket_1:/var/run/redis/:rw"
+      - "receptor_1:/var/run/receptor/"
+    privileged: true
+    tty: true
+    ports:
+      - "7899-7999:7899-7999"  # sdb-listen
+      - "6899:6899"
+      #- "8080:8080"  # unused but mapped for debugging
+      #- "8888:8888"  # jupyter notebook
+      #- "8013:8013"  # http
+      #- "8043:8043"  # https
+  redis_1:
+    image: redis:latest
+    container_name: ansible_redis_1
+    volumes:
+      - "${DOCKER_BASEDIR}/awx/tools/redis/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "redis_socket_1:/var/run/redis/:rw"
+    entrypoint: ["redis-server"]
+    command: ["/usr/local/etc/redis/redis.conf"]
+  # A useful container that simply passes through log messages to the console
+  # helpful for testing awx/tower logging
+  # logstash:
+  #   build:
+  #     context: ./docker-compose
+  #     dockerfile: Dockerfile-logstash
+  postgres:
+    image: postgres:12
+    container_name: ansible_postgres_1
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: awx
+      POSTGRES_DB: awx
+      POSTGRES_PASSWORD: ${ANSIBLE_PG_PASSWORD}
+    volumes:
+      - "awx_db:/var/lib/postgresql/data"
+volumes:
+  awx_db:
+  receptor_1:
+  redis_socket_1:
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}

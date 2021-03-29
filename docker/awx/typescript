@@ -1,0 +1,135 @@
+Script started on 2021-03-29 16:01:05+00:00 [TERM="xterm" TTY="/dev/pts/1" COLUMNS="177" LINES="43"]
+]0;llharris@deskmini: ~/awxllharris@deskmini:~/awx$ make docker-compose
+ansible-playbook -i tools/docker-compose/inventory tools/docker-compose/ansible/sources.yml \
+    -e awx_image=gcr.io/ansible-tower-engineering/awx_devel \
+    -e awx_image_tag=HEAD \
+    -e cluster_node_count=1
+
+PLAY [Render AWX Dockerfile and sources] ****************************************************************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Create _sources directory] **************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Detect secrets] *************************************************************************************************************************************************
+[0;32mok: [localhost] => (item=pg_password)[0m
+[0;32m[0m[0;32mok: [localhost] => (item=secret_key)[0m
+[0;32m[0m[0;32mok: [localhost] => (item=broadcast_websocket_secret)[0m
+[0;32m[0m
+TASK [sources : Generate secrets if needed] *************************************************************************************************************************************
+[0;36mskipping: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '../_sources/secrets/pg_password.yml', 'mode': '0600', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 1000, 'gid': 1000, 'size': 36, 'inode': 14330697, 'dev': 64769, 'nlink': 1, 'atime': 1617032577.321029, 'mtime': 1617032576.3250222, 'ctime': 1617032576.5410237, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': False, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'llharris', 'gr_name': 'llharris', 'checksum': 'b9436de051ce01d3b73a3fa1e9687b67a6a11724', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '249440388', 'attributes': [], 'attr_flags': ''}, 'invocation': {'module_args': {'path': '../_sources/secrets/pg_password.yml', 'follow': False, 'get_md5': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': 'pg_password', 'ansible_loop_var': 'item'}) [0m
+[0;36m[0m[0;36mskipping: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '../_sources/secrets/secret_key.yml', 'mode': '0600', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 1000, 'gid': 1000, 'size': 35, 'inode': 14330699, 'dev': 64769, 'nlink': 1, 'atime': 1617032577.341029, 'mtime': 1617032576.737025, 'ctime': 1617032576.9010262, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': False, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'llharris', 'gr_name': 'llharris', 'checksum': '3bdea160af5c4a098a853f95ff901d5011455320', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '2793689415', 'attributes': [], 'attr_flags': ''}, 'invocation': {'module_args': {'path': '../_sources/secrets/secret_key.yml', 'follow': False, 'get_md5': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': 'secret_key', 'ansible_loop_var': 'item'}) [0m
+[0;36m[0m[0;36mskipping: [localhost] => (item={'changed': False, 'stat': {'exists': True, 'path': '../_sources/secrets/broadcast_websocket_secret.yml', 'mode': '0600', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 1000, 'gid': 1000, 'size': 51, 'inode': 14330700, 'dev': 64769, 'nlink': 1, 'atime': 1617032577.3610291, 'mtime': 1617032577.1130276, 'ctime': 1617032577.2330284, 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': False, 'xgrp': False, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False, 'blocks': 8, 'block_size': 4096, 'device_type': 0, 'readable': True, 'writeable': True, 'executable': False, 'pw_name': 'llharris', 'gr_name': 'llharris', 'checksum': 'cce3369fc4b4f417c52a70eaccdd756cbbd3628a', 'mimetype': 'text/plain', 'charset': 'us-ascii', 'version': '2539385718', 'attributes': [], 'attr_flags': ''}, 'invocation': {'module_args': {'path': '../_sources/secrets/broadcast_websocket_secret.yml', 'follow': False, 'get_md5': False, 'get_checksum': True, 'get_mime': True, 'get_attributes': True, 'checksum_algorithm': 'sha1'}}, 'failed': False, 'item': 'broadcast_websocket_secret', 'ansible_loop_var': 'item'}) [0m
+[0;36m[0m
+TASK [sources : Include generated secrets unless they are explicitly passed in] *************************************************************************************************
+[0;32mok: [localhost] => (item=None)[0m
+[0;32m[0m[0;32mok: [localhost] => (item=None)[0m
+[0;32m[0m[0;32mok: [localhost] => (item=None)[0m
+[0;32m[0m[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Write out SECRET_KEY] *******************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Render configuration templates] *********************************************************************************************************************************
+[0;32mok: [localhost] => (item=database.py)[0m
+[0;32m[0m[0;32mok: [localhost] => (item=websocket_secret.py)[0m
+[0;32m[0m[0;32mok: [localhost] => (item=haproxy.cfg)[0m
+[0;32m[0m
+TASK [sources : Delete old local_settings.py] ***********************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Copy local_settings.py] *****************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Get OS info for sdb] ********************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Get user UID] ***************************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Set fact with user UID] *****************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+TASK [sources : Set global version if not provided] *****************************************************************************************************************************
+[0;36mskipping: [localhost][0m
+[0;36m[0m
+TASK [sources : Render Docker-Compose] ******************************************************************************************************************************************
+[0;32mok: [localhost][0m
+[0;32m[0m
+PLAY RECAP **********************************************************************************************************************************************************************
+[0;32mlocalhost[0m                  : [0;32mok=12  [0m changed=0    unreachable=0    failed=0    [0;36mskipped=2   [0m rescued=0    ignored=0   
+
+docker-compose -f tools/docker-compose/_sources/docker-compose.yml  up
+tools_redis_1 is up-to-date
+tools_postgres_1 is up-to-date
+Starting tools_awx_1 ... 
+
+ERROR: for tools_awx_1  a bytes-like object is required, not 'str'
+
+ERROR: for awx_1  a bytes-like object is required, not 'str'
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/docker/api/client.py", line 261, in _raise_for_status
+    response.raise_for_status()
+  File "/usr/lib/python3/dist-packages/requests/models.py", line 940, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: http+docker://localhost/v1.22/containers/917b856040dc1f8874b4b525e1735e42aeb75926c1eee7913cb1dd510236b04f/start
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/compose/service.py", line 625, in start_container
+    container.start()
+  File "/usr/lib/python3/dist-packages/compose/container.py", line 241, in start
+    return self.client.start(self.id, **options)
+  File "/usr/lib/python3/dist-packages/docker/utils/decorators.py", line 19, in wrapped
+    return f(self, resource_id, *args, **kwargs)
+  File "/usr/lib/python3/dist-packages/docker/api/container.py", line 1095, in start
+    self._raise_for_status(res)
+  File "/usr/lib/python3/dist-packages/docker/api/client.py", line 263, in _raise_for_status
+    raise create_api_error_from_http_exception(e)
+  File "/usr/lib/python3/dist-packages/docker/errors.py", line 31, in create_api_error_from_http_exception
+    raise cls(e, response=response, explanation=explanation)
+docker.errors.APIError: 500 Server Error: Internal Server Error ("b'driver failed programming external connectivity on endpoint tools_awx_1 (e64afa9e0aa91cd7f82d4b5be032ef236468cb46cca0b00ae59573630480f154): Bind for 0.0.0.0:8080 failed: port is already allocated'")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/bin/docker-compose", line 11, in <module>
+    load_entry_point('docker-compose==1.25.0', 'console_scripts', 'docker-compose')()
+  File "/usr/lib/python3/dist-packages/compose/cli/main.py", line 72, in main
+    command()
+  File "/usr/lib/python3/dist-packages/compose/cli/main.py", line 128, in perform_command
+    handler(command, command_options)
+  File "/usr/lib/python3/dist-packages/compose/cli/main.py", line 1107, in up
+    to_attach = up(False)
+  File "/usr/lib/python3/dist-packages/compose/cli/main.py", line 1088, in up
+    return self.project.up(
+  File "/usr/lib/python3/dist-packages/compose/project.py", line 565, in up
+    results, errors = parallel.parallel_execute(
+  File "/usr/lib/python3/dist-packages/compose/parallel.py", line 112, in parallel_execute
+    raise error_to_reraise
+  File "/usr/lib/python3/dist-packages/compose/parallel.py", line 210, in producer
+    result = func(obj)
+  File "/usr/lib/python3/dist-packages/compose/project.py", line 548, in do
+    return service.execute_convergence_plan(
+  File "/usr/lib/python3/dist-packages/compose/service.py", line 567, in execute_convergence_plan
+    return self._execute_convergence_start(
+  File "/usr/lib/python3/dist-packages/compose/service.py", line 506, in _execute_convergence_start
+    _, errors = parallel_execute(
+  File "/usr/lib/python3/dist-packages/compose/parallel.py", line 112, in parallel_execute
+    raise error_to_reraise
+  File "/usr/lib/python3/dist-packages/compose/parallel.py", line 210, in producer
+    result = func(obj)
+  File "/usr/lib/python3/dist-packages/compose/service.py", line 508, in <lambda>
+    lambda c: self.start_container_if_stopped(c, attach_logs=not detached, quiet=True),
+  File "/usr/lib/python3/dist-packages/compose/service.py", line 620, in start_container_if_stopped
+    return self.start_container(container)
+  File "/usr/lib/python3/dist-packages/compose/service.py", line 627, in start_container
+    if "driver failed programming external connectivity" in ex.explanation:
+TypeError: a bytes-like object is required, not 'str'
+make: *** [Makefile:486: docker-compose] Error 1
+]0;llharris@deskmini: ~/awxllharris@deskmini:~/awx$ exit
+
+Script done on 2021-03-29 16:01:26+00:00 [COMMAND_EXIT_CODE="2"]
