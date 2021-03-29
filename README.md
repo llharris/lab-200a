@@ -7,6 +7,9 @@ This repo and documentation is for my personal lab environment. These are essent
 * [DNS Configuration](docs/dns.md)
 * [Git Mirror Config](docs/git-mirror.md)
 * [Firewall Config](docs/ufw.md)
+* [Observability](docs/obs.md)
+* [IAM](docs/iam.md)
+* [Todo List](docs/todo.md)
 
 ## OVERVIEW
 
@@ -33,18 +36,10 @@ Where possible, all services running on deskmini are run as containers under doc
 ### SERVICES PLANNED OR WORK IN PROGRESS
 
 * [AWX](https://awx.200a.co.uk) - Free Red Hat Tower.
-* [Sonarqube](#) - Code scanning.
-* [Minio](#) - S3 Compatible Object Storage.
-* [RocketChat] - OpenSource Slack-a-like.
-* [Rancher] - Container platform management.
-* [LDAP] - Not sure whether to go through the pain of deploying Active Directory or something else...
-
-### LOGGING AND MONTORING
-
-This will be added later once I've figured out what logs and events I'm interested in.
-
-### DIRECTORY SERVICES
-
-Ideally, I would like to integrate most other services with an LDAP directory service for authentication. Obvious choice would be to run a Windows Server VM, but it's a bit heavyweight and the Deskmini is already beginning to creak under the load. Alternatives to look at include OpenLDAP, FreeIPA and Samba 4.
+* Sonarqube - Code scanning.
+* Minio - S3 Compatible Object Storage.
+* RocketChat - OpenSource Slack-a-like.
+* Rancher - Container platform management.
+* LDAP - Not sure whether to go through the pain of deploying Active Directory or something else...
 
 
