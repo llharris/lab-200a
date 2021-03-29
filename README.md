@@ -37,7 +37,6 @@ Where possible, all services running on deskmini are run as containers under doc
 
 ### SERVICES PLANNED OR WORK IN PROGRESS
 
-* [AWX](https://awx.200a.co.uk) - Free Red Hat Tower.
 * Sonarqube - Code scanning.
 * Minio - S3 Compatible Object Storage.
 * RocketChat - OpenSource Slack-a-like.
