@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  openldap:
+    image: docker.io/bitnami/openldap:2.4.58
+    container_name: openldap
+    hostname: openldap
+    restart: always
+    ports:
+      - "389:1389"
+      - "636:1636"
+    environment:
+      - LDAP_ADMIN_USERNAME=${LDAP_ADMIN_USERNAME}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+    volumes:
+      - "openldap_data:/bitnami/openldap"
+
+  ldap-ui:
+    image: wheelybird/ldap-user-manager:v1.6
+    container_name: ldap-ui
+    hostname: ldap-ui
+    restart: always
+    depends_on:
+      - openldap
+    environment:
+      - SERVER_HOSTNAME=ldap-ui.200a.co.uk
+      - LDAP_URI=ldap://192.168.200.254
+      - LDAP_BASE_DN=${LDAP_BASE_DN}
+      - LDAP_REQUIRE_STARTTLS=${STARTTLS}
+      - LDAP_ADMIN_GROUP=${ADMIN_GROUP}
+      - LDAP_ADMIN_BIND_DN=...
+      - LDAP_ADMIN_BIND_PWD=secret
+      - LDAP_IGNORE_CERT_ERROR=true
+      - EMAIL_DOMAIN=example.com
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ldap-ui.entrypoints=websecure"
+      - "traefik.http.routers.ldap-ui.tls=true"
+      - "traefik.http.routers.ldap-ui.rule=Host(`ldap-ui.${MY_DOMAIN}`)"
+
+volumes:
+  openldap_data:
+
+networks:
+  default:
+    external: 
+      name: traefik_net
