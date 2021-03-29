@@ -2,13 +2,13 @@ version: '3'
 
 services:
   guacd:
-    image: guacamole/guacd
+    image: guacamole/guacd:1.3.0
     container_name: guacd
     hostname: guacd
     restart: unless-stopped
 
   guacamole:
-    image: guacamole/guacamole:latest
+    image: guacamole/guacamole:1.3.0
     container_name: guacamole
     hostname: guacamole
     restart: unless-stopped

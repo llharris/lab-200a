@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: gitlab/gitlab-ee:latest
+    image: gitlab/gitlab-ee:13.10.0-ee.0
     restart: always
     container_name: gitlab-ee
     hostname: ${GITLAB_HOSTNAME}
@@ -118,12 +118,6 @@ services:
       - gitlab-config:/etc/gitlab
       - gitlab-logs:/var/log/gitlab
       - gitlab-data:/var/opt/gitlab
-      - '/srv/docker/gitlab/ssl/${REGISTRY_HOSTNAME}.crt:/etc/gitlab/ssl/${REGISTRY_HOSTNAME}.crt:ro'
-      - '/srv/docker/gitlab/ssl/${REGISTRY_HOSTNAME}.key:/etc/gitlab/ssl/${REGISTRY_HOSTNAME}.key:ro'
-      - '/srv/docker/gitlab/ssl/${GITLAB_HOSTNAME}.crt:/etc/gitlab/ssl/${GITLAB_HOSTNAME}.crt:ro'
-      - '/srv/docker/gitlab/ssl/${GITLAB_HOSTNAME}.key:/etc/gitlab/ssl/${GITLAB_HOSTNAME}.key:ro'
-      - '/srv/docker/gitlab/ssl/${MATTERMOST_HOSTNAME}.crt:/etc/gitlab/ssl/${MATTERMOST_HOSTNAME}.crt:ro'
-      - '/srv/docker/gitlab/ssl/${MATTERMOST_HOSTNAME}.key:/etc/gitlab/ssl/${MATTERMOST_HOSTNAME}.key:ro'
 
 networks:
   default:

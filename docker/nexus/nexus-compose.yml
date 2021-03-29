@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nexus3:
-    image: sonatype/nexus3
+    image: sonatype/nexus3:3.30.0
     container_name: nexus
     hostname: nexus
     restart: unless-stopped

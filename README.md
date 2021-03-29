@@ -10,6 +10,7 @@ This repo and documentation is for my personal lab environment. These are essent
 * [Observability](docs/obs.md)
 * [IAM](docs/iam.md)
 * [Todo List](docs/todo.md)
+* [AWX Setup](docs/awx.md)
 
 ## OVERVIEW
 
