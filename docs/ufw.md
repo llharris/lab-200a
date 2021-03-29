@@ -1,4 +1,4 @@
-# Ubuntu Firewall Configuration
+# UBUNTU FIREWALL CONFIGURATION
 
 Ubuntu uses ufw as a mean of controlling IP tables. For KVM bridges to work, it seems that UFW has to be enabled.
 

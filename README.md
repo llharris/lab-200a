@@ -8,87 +8,43 @@ This repo and documentation is for my personal lab environment. These are essent
 * [Git Mirror Config](docs/git-mirror.md)
 * [Firewall Config](docs/ufw.md)
 
+## OVERVIEW
 
-## Overview
+The lab consists of an ASRock Deskmini A300 which running Ubuntu Server 20.04 LTS. This machine is always on and provides the core services for the local network and the lab environment. Deskmini runs dnsmasq which provides name resolution for clients on the network. Internet connection is via a DSL Router which has DHCP enabled. DHCP configuration points to deskmini for DNS.
 
-200a.co.uk is the name of my home lab based on the domain name it uses. I own the 200a.co.uk domain. The lab consists of a small home network that incorporates:
+The intention is that deskmini runs all the things that are fairly static and stable. These are all of the services required to automate the rest of the lab. The idea is that the tools provided by deskmini are able to be used to spin up new environments on demand which will run either on a Dell R710 running ESXi, or on my PC running VMware Workstation or any other nested hypervisor running either on top of ESXi or VMware Workstation. They could also be run in a public cloud if I'm feeling particularly flush. Sounds good right...
 
-* An ASRock Deskmini A300 as an 'always-on' energy efficient server running CentOS 8.2.
-* My main PC with lots of memory and storage for VMs.
-* A Dell PowerEdge R710 server for more permanent workloads with local SSD and SAS storage, 12 cores and 192GB of RAM (also has a iDRAC)
-* A whitebox Intel Xeon machine with 64GB of RAM and minimal (~256GB local storage), primary use is paperweight and dust magnet.
-* Connectivity is through basic, unmanaged gigabit switches (no VLAN support) with DSL Router for Internet
-* Linksys Velop Mesh Wifi
-* Various other devices which connect to the network (phones, laptops, smart home stuff etc.)
+### SERVICES UP AND RUNNING
 
-## Subnets, VLANs and DNS Domain
+Where possible, all services running on deskmini are run as containers under docker. The main exception to that rule is DNSmasq and MariaDB which run directly on the host. In addition, deskmini also runs libvirt for VMs.
 
-There are no VLANs configured because the switch that does that is far too noisy for my office. The entire local network is contained within a single subnet; 192.168.200.0/24. The DNS domain for the network is `home.200a.co.uk`. 200a.co.uk is my registered domain name. Everything that has a wired connection goes into a pair of connected, un-managed 8-port gigabit switches. 
+* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. 
+* [Traefik](https://traefik.200a.co.uk) - Proxies connections and handles TLS termination for most other services.
+* [Portainer](https://portainer.200a.co.uk) - Web based container management.
+* [iDRAC6](https://idracweb.200a.co.uk) - Client for old iDRAC 6 so I don't have to try to install JRE 1.6 on my computer.
+* [Sonatype Nexus3 OSS](https://nexus.200a.co.uk) - Artifact repository.
+* [Hashicorp Vault](https://vault.200a.co.uk) - Secrets management.
+* [LibreSpeed](https://speed.200a.co.uk) - Internet speed test.
+* [Jenkins](https://jenkins.200a.co.uk) - CI/CD stuff.
+* [GitLab EE](https://gitlab.200a.co.uk) - Git SCM. A bit bloaty. Also runs a container registry.
+* [Mattermost](https://mattermost.200a.co.uk) - Comes as part of Git. Collaboration tool.
+* [Guacamole](https://guac.200a.co.uk) - Clientless remote desktop gateway. Access VNC, RDP, SSH via HTML5.
 
-## Primary Services
+### SERVICES PLANNED OR WORK IN PROGRESS
 
-It is important to be able to maintain Internet service for other devices on the network. Primarily this depends on the availability of DHCP and DNS to keep Wifi devices, smart TVs, Sonos Speakers and the like up and running so I don't get grief.
+* [AWX](https://awx.200a.co.uk) - Free Red Hat Tower.
+* [Sonarqube](#) - Code scanning.
+* [Minio](#) - S3 Compatible Object Storage.
+* [RocketChat] - OpenSource Slack-a-like.
+* [Rancher] - Container platform management.
+* [LDAP] - Not sure whether to go through the pain of deploying Active Directory or something else...
 
-* DHCP - Is currently provided by the Fritz Box 3490 DSL Router. Most physical devices of consequence have DHCP reservations.
-* DNS - Currently served by the Deskmini (192.168.200.254) via a local dnsmasq service.
+### LOGGING AND MONTORING
 
-## Secondary Services
+This will be added later once I've figured out what logs and events I'm interested in.
 
-Not as important, but still ideally kept up and running at all times:
+### DIRECTORY SERVICES
 
-* Network Printing (cups running on deskmini) using Samsung ML1510 via USB
-* Avahi to support IPP printer discovery
-* NTP Server (running on deskmini via chronyd)
+Ideally, I would like to integrate most other services with an LDAP directory service for authentication. Obvious choice would be to run a Windows Server VM, but it's a bit heavyweight and the Deskmini is already beginning to creak under the load. Alternatives to look at include OpenLDAP, FreeIPA and Samba 4.
 
-## Tertiary Services
 
-The following services are more for my convenience in managing the environment or for learning, experimentation and evaluating various technologies.
-
-* Windows Server 2016 Std. VM - 192.168.200.250 / windc1.home.200a.co.uk
-  * Main purpose is to provide LDAP/LDAPS.
-* Ubuntu 20.04 LTS VM running Docker Engine - 192.168,200.50 / ubuntu-vm.home.200a.co.uk
-  * Various containerised services
-
-## Contents
-
-* [Useful Notes & Links](docs/notes-and-links.md)
-* [Certbot & Let's Encrypt](docs/certbot-le.md)
-* [Traefik V2](docs/traefik_v2.md)
-* [iDRAC6 via Docker](docs/idrac.md)
-* [Certbot](docs/certbot.md)
-* [Kubernetes](docs/kubernetes.md)
-* [VMware](docs/vmware.md)
-* [Ubuntu Network Config](docs/ubuntu-networking.md)
-
----
-
-## Rough To-Do List
-
-As of 27th Oct 2020
-
-* Configure Guacamole docker containers on Ubuntu-VM
-* Install Gitea container on Ubuntu-VM
-* Configure Traefik to use Lets Encrypt certs for HTTPS
-* Configure Traefik to use OAuth.
-* Configure Traefik as reverse proxy for Gitea, Guacamole
-* Install and configure Windows VM on deskmini for LDAPS
-* Build on premise Kubernetes cluster
-  * See these docs: https://github.com/SirSirae/kubernetes-docs, https://wiki.majomi.dev/books/raspberry-pi-4-cluster
-* Setup Raspberry Pi (need to figure out what it'll be doing)
-* Attach USB storage device to deskmini to take backups. Schedule regular backups.
-* Install and investigate LENS
-* Deploy Rancher
-* Deploy VPN solution and firewall off access to a network on the R710.
-* Deploy Autom8y components:
-  * Hashicorp Vault Container
-  * Hashicorp Terraform Container (look at Sentinel too)
-  * Hashicorp Packer
-  * Ansible/AWX
-  * Jenkins & Spinnaker
-  * AWS, GCP and Azure CLIs/SDKs
-  * PowerShell Core
-  * Configure Cockpit to use SSL certificates
-  * Monitoring - Look at Prometheus, ELK Stack and Grafana
-  * Look at Caddy 2 (as alternative to Traefik)
-* Move the docker hosted container services to run on Kubernetes
-* Documentation - Ongoing
