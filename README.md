@@ -22,18 +22,36 @@ The intention is that deskmini runs all the things that are fairly static and st
 
 Where possible, all services running on deskmini are run as containers under docker. The main exception to that rule is DNSmasq and MariaDB which run directly on the host. In addition, deskmini also runs libvirt for VMs and a Windows VM runs both AD Directory Services and an Enterprise Root CA simply to allow LDAPS to function.
 
-* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. ![Screenshot](docs/img/heimdall.png)
+* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. 
+
+  ![Screenshot](docs/img/heimdall.png)
 * [Traefik](https://traefik.200a.co.uk) - Proxies connections and handles TLS termination for most other services.
+
+  ![Screenshot](docs/img/traefik-dashboard.png)
 * [Portainer](https://portainer.200a.co.uk) - Web based container management.
+
+  ![Screenshot](docs/img/portainer.png)
 * [iDRAC6](https://idracweb.200a.co.uk) - Client for old iDRAC 6 so I don't have to try to install JRE 1.6 on my computer.
+
+  ![Screenshot](docs/img/idrac.png)
 * [Sonatype Nexus3 OSS](https://nexus.200a.co.uk) - Artifact repository.
+
+  ![Screenshot](docs/img/nexus.png)
 * [Hashicorp Vault](https://vault.200a.co.uk) - Secrets management.
+
+  ![Screenshot](docs/img/vault.png)
 * [LibreSpeed](https://speed.200a.co.uk) - Internet speed test.
+
+  ![Screenshot](docs/img/librespeed.png)
 * [Jenkins](https://jenkins.200a.co.uk) - CI/CD stuff.
+
+  ![Screenshot](docs/img/jenkins.png)
 * [GitLab EE](https://gitlab.200a.co.uk) - Git SCM. A bit bloaty. Also runs a container registry.
 * [Mattermost](https://mattermost.200a.co.uk) - Comes as part of Git. Collaboration tool.
 * [Guacamole](https://guac.200a.co.uk) - Clientless remote desktop gateway. Access VNC, RDP, SSH via HTML5.
 * [AWX](https://awx.200a.co.uk) - Free version of Red Hat Tower. AWX v18.0.0. Knifed and forked into workin with Traefik somehow...
+
+  ![Screenshot](docs/img/awx-login.png)
 
 ### SERVICES PLANNED OR WORK IN PROGRESS
 
