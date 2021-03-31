@@ -22,7 +22,7 @@ The intention is that deskmini runs all the things that are fairly static and st
 
 Where possible, all services running on deskmini are run as containers under docker. The main exception to that rule is DNSmasq and MariaDB which run directly on the host. In addition, deskmini also runs libvirt for VMs and a Windows VM runs both AD Directory Services and an Enterprise Root CA simply to allow LDAPS to function.
 
-* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. ![Screenshot](img/heimdall.png)
+* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. [Screenshot](img/heimdall.png)
 * [Traefik](https://traefik.200a.co.uk) - Proxies connections and handles TLS termination for most other services.
 * [Portainer](https://portainer.200a.co.uk) - Web based container management.
 * [iDRAC6](https://idracweb.200a.co.uk) - Client for old iDRAC 6 so I don't have to try to install JRE 1.6 on my computer.
