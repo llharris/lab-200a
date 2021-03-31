@@ -20,9 +20,9 @@ The intention is that deskmini runs all the things that are fairly static and st
 
 ### SERVICES UP AND RUNNING
 
-Where possible, all services running on deskmini are run as containers under docker. The main exception to that rule is DNSmasq and MariaDB which run directly on the host. In addition, deskmini also runs libvirt for VMs.
+Where possible, all services running on deskmini are run as containers under docker. The main exception to that rule is DNSmasq and MariaDB which run directly on the host. In addition, deskmini also runs libvirt for VMs and a Windows VM runs both AD Directory Services and an Enterprise Root CA simply to allow LDAPS to function.
 
-* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. 
+* [Heimdall](https://heimdall.200a.co.uk) - A pretty dashboard for organising links. ![Screenshot](img/heimdall.png)
 * [Traefik](https://traefik.200a.co.uk) - Proxies connections and handles TLS termination for most other services.
 * [Portainer](https://portainer.200a.co.uk) - Web based container management.
 * [iDRAC6](https://idracweb.200a.co.uk) - Client for old iDRAC 6 so I don't have to try to install JRE 1.6 on my computer.
@@ -33,7 +33,7 @@ Where possible, all services running on deskmini are run as containers under doc
 * [GitLab EE](https://gitlab.200a.co.uk) - Git SCM. A bit bloaty. Also runs a container registry.
 * [Mattermost](https://mattermost.200a.co.uk) - Comes as part of Git. Collaboration tool.
 * [Guacamole](https://guac.200a.co.uk) - Clientless remote desktop gateway. Access VNC, RDP, SSH via HTML5.
-* [AWX](https://awx.200a.co.uk) - Free version of Red Hat Tower. AWX v18.0.0. Knifed and forked into existence somehow.
+* [AWX](https://awx.200a.co.uk) - Free version of Red Hat Tower. AWX v18.0.0. Knifed and forked into workin with Traefik somehow...
 
 ### SERVICES PLANNED OR WORK IN PROGRESS
 
@@ -43,4 +43,6 @@ Where possible, all services running on deskmini are run as containers under doc
 * Rancher - Container platform management.
 * LDAP - Not sure whether to go through the pain of deploying Active Directory or something else...
 
+### NETWORK THINGS
 
+Everything lives inside a single subnet, `192.168.200.0/24`. The domain name originally was `home.200a.co.uk` but someone messed up generating a LetsEncrypt wildcard certificate and didn't realise until later. Now most things are using `200a.co.uk` as their domain. AD is using `ad.200a.co.uk` just so I can conditionally forward resolution for the other domains back to the DNSmasq machine.

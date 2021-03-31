@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  rocketchat:
+    container_name: rocketchat
+    hostname: rocketchat
+    image: rocketchat/rocket.chat:3.12.3
+    command: >
+
+        
+

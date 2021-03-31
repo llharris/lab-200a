@@ -6,6 +6,8 @@ services:
     container_name: idrac
     hostname: idrac
     restart: always
+    ports:
+      - 192.168.200.254:5900:5900
     volumes:
       - "${DOCKER_BASEDIR}/idrac/app:/app"
       - "${DOCKER_BASEDIR}/idrac/vmedia:/vmedia"
