@@ -13,3 +13,10 @@ The easiest approach will be to automate a series of building blocks which we ca
 - 
 .....
 
+WORK IN PROGRESS>>>
+
+### TEST ENVIRONMENT BUILDING BLOCKS
+
+* RACADMIN power on Dell Server ESXi host.
+  
+

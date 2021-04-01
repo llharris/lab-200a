@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine-v13.10.0
+    container_name: gitlab-runner
+    hostname: gitlab-runner
+    restart: always
+    volumes:
+      - ${DOCKER_BASEDIR}/gitlab-runner/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
