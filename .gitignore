@@ -185,3 +185,4 @@ use_dev_supervisor.txt
 # Terraform
 .terraform*
 *.tfstate
+*.tfplan

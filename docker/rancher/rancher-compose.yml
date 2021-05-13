@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  rancher:
+    image: rancher/rancher:v2.5.8-rc2
+    container_name: rancher 
+    hostname: rancher
+    restart: always
+    privileged: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=443"
+      - "traefik.http.routers.rancher.entrypoints=websecure"
+      - "traefik.http.routers.rancher.rule=Host(`rancher.${MY_DOMAIN}`)"
+      - "traefik.http.routers.rancher.tls=true"
+
+networks:
+  default:
+    external: 
+      name: ${DEFAULT_NETWORK}
